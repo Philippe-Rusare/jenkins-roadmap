@@ -1,0 +1,39 @@
+pipeline {
+
+    // Defines where the Pipeline will run
+    agent any
+
+    // Collection of all stages
+    stages {
+
+        // Stage 1
+        stage('Preparation') {
+
+            // Commands executed in this stage
+            steps {
+                echo 'Preparing the Pipeline...'
+            }
+
+        }
+
+        // Stage 2
+        stage('Execution') {
+
+            steps {
+                echo 'Executing the Pipeline...'
+            }
+
+        }
+
+        // Stage 3
+        stage('Completion') {
+
+            steps {
+                echo 'Pipeline completed successfully!'
+            }
+
+        }
+
+    }
+
+}
