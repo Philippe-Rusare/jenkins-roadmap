@@ -1,0 +1,37 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Initialize') {
+            steps {
+                echo '====================================='
+                echo ' Welcome to the Jenkins Roadmap'
+                echo '====================================='
+            }
+        }
+
+        stage('Environment') {
+            steps {
+                sh 'whoami'
+                sh 'hostname'
+                sh 'pwd'
+            }
+        }
+
+        stage('Java Information') {
+            steps {
+                sh 'java -version'
+            }
+        }
+
+        stage('Pipeline Completed') {
+            steps {
+                echo 'Congratulations! Your first Jenkins Pipeline ran successfully.'
+            }
+        }
+
+    }
+
+}
