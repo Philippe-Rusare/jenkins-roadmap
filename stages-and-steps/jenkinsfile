@@ -1,0 +1,48 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Preparation') {
+            steps {
+                echo 'Preparing workspace...'
+                sh 'pwd'
+                sh 'ls -la'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Simulating application build...'
+                sh 'echo "Compiling source code..."'
+                sleep 2
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running simulated tests...'
+                sh 'echo "All tests passed!"'
+                sleep 2
+            }
+        }
+
+        stage('Package') {
+            steps {
+                echo 'Packaging application...'
+                sh 'mkdir -p build'
+                sh 'echo "Application Package" > build/app.txt'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Simulating deployment...'
+                sh 'echo "Deployment completed."'
+            }
+        }
+
+    }
+
+}
