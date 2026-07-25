@@ -6,40 +6,22 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Cloning repository...'
                 checkout scm
             }
         }
 
         stage('Build') {
             steps {
-
-                    sh 'pwd'
+                dir('hello-jenkins-app') {
+                    sh './mvnw clean package'
+                }
             }
         }
 
         stage('Archive') {
             steps {
-                sh 'ls -la'
+                archiveArtifacts artifacts: 'hello-jenkins-app/target/*.jar'
             }
         }
- 
     }
-
-    post {
-
-        success {
-            echo 'Application built successfully!'
-        }
-
-        failure {
-            echo 'Build failed.'
-        }
-
-        always {
-            echo 'Pipeline finished.'
-        }
-
-    }
-
 }
