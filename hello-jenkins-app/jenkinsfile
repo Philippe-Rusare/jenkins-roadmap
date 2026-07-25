@@ -12,15 +12,15 @@ pipeline {
         }
 
         stage('Build') {
-        
-            dir('hello-jenkins-app') {
-                 sh './mvnw clean package'
+            steps {
+
+                    sh './mvnw clean package'
             }
         }
 
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'hello-jenkins-app/target/*.jar'
+                archiveArtifacts artifacts: '/target/*.jar'
             }
         }
 
