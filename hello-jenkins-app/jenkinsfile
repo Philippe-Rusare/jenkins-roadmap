@@ -13,15 +13,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('app') {
-                    sh './mvnw clean package'
-                }
+                sh './mvnw clean package'
             }
         }
 
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'app/target/*.jar'
+                archiveArtifacts artifacts: 'target/*.jar'
             }
         }
 
