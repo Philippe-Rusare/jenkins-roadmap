@@ -20,10 +20,10 @@ pipeline {
 
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: '/target/*.jar'
+                archiveArtifacts artifacts: 'ls -la'
             }
         }
-
+ 
     }
 
     post {
