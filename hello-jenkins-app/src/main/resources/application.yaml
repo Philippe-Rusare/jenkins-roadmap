@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: hello-jenkins-app
+server:
+  port: 8888
