@@ -6,6 +6,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
+                echo 'Cloning repository...'
                 checkout scm
             }
         }
@@ -23,5 +24,31 @@ pipeline {
                 archiveArtifacts artifacts: 'hello-jenkins-app/target/*.jar'
             }
         }
+
+         stage('deploy') {
+            steps {
+                dir('hello-jenkins-app') {
+                    sh './mvnw spring-boot:run'
+                }
+            }
+        }
+ 
     }
+
+    post {
+
+        success {
+            echo 'Application built successfully!'
+        }
+
+        failure {
+            echo 'Build failed.'
+        }
+
+        always {
+            echo 'Pipeline finished.'
+        }
+
+    }
+
 }
