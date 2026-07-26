@@ -1,4 +1,4 @@
-# Chapter 09 - Build Parameters
+# Chapter 08 - Build Parameters
 
 ## 📖 Introduction
 

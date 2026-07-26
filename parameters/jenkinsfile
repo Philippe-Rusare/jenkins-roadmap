@@ -58,7 +58,7 @@ pipeline {
 
             steps {
 
-                echo "Testing tthe app "
+                echo "Testing the app "
 
             }
 
