@@ -26,13 +26,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh "i build my archive"
+                echo "i build my archive"
             }
         }
 
         stage('Archive') {
             steps {
-                sh 'i store my archive'
+                echo 'i store my archive'
             }
         }
 
