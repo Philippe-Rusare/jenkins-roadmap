@@ -32,7 +32,7 @@ pipeline {
 
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'i store my archive'
+                sh 'i store my archive'
             }
         }
 

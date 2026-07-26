@@ -20,15 +20,15 @@ Without variables:
 
 ```groovy
 sh "./mvnw clean package"
-sh "docker build -t ultracore:v1 ."
-sh "docker push ultracore:v1"
+sh "docker build -t app projet:v1 ."
+sh "docker push app projet:v1"
 ```
 
 With variables:
 
 ```groovy
 environment {
-    APP_NAME = "ultracore"
+    APP_NAME = "app projet"
     VERSION  = "v1"
 }
 
