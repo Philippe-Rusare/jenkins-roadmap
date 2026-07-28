@@ -28,15 +28,16 @@ pipeline {
 
             steps {
 
-                dir('hello-jenkins-app'){
 
-                sh """
+                    sh "pwd"
+                    sh "ls"
+                /* sh """
                     docker build \
                     -t ${IMAGE_NAME}:${IMAGE_TAG} \
                     .
-                """
+                """ */
 
-            }
+            
             }
 
         }
