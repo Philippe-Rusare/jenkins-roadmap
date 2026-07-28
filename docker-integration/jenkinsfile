@@ -15,7 +15,7 @@ pipeline {
         stage('Build Application') {
 
             steps {
-                dir('hello-jenkins-app'){
+                dir('docker-integration'){
 
                 sh "./mvnw clean package"
 
@@ -28,16 +28,15 @@ pipeline {
 
             steps {
 
+                dir('docker-integration'){
 
-                    sh "pwd"
-                    sh "ls"
-                /* sh """
+                sh """
                     docker build \
                     -t ${IMAGE_NAME}:${IMAGE_TAG} \
                     .
-                """ */
+                """
 
-            
+            }
             }
 
         }
