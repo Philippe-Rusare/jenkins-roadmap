@@ -1,0 +1,56 @@
+pipeline {
+
+    agent any
+
+    environment {
+
+        IMAGE_NAME = "hello-jenkins-app-docker-integration"
+
+        IMAGE_TAG = "${BUILD_NUMBER}"
+
+    }
+
+    stages {
+
+        stage('Build Application') {
+
+            steps {
+                dir('hello-jenkins-app'){
+
+                sh "./mvnw clean package"
+
+                }
+            }
+
+        }
+
+        stage('Build Docker Image') {
+
+            steps {
+
+                dir('hello-jenkins-app'){
+
+                sh """
+                    docker build \
+                    -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                    .
+                """
+
+            }
+            }
+
+        }
+
+        stage('List Docker Images') {
+
+            steps {
+
+                sh "docker images"
+
+            }
+
+        }
+
+    }
+
+}
