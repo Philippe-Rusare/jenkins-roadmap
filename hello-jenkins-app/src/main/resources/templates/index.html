@@ -3,51 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Jenkins Deployment Success</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #212529;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        
-        .card {
-            background-color: #ffffff;
-            padding: 3rem 4rem;
-            border-radius: 6px;
-            border: 1px solid #dee2e6;
-            text-align: center;
-        }
-
-        h1 {
-            color: #343a40;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .badge {
-            background-color: #e6f4ea;
-            color: #1e8e3e;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: inline-block;
-        }
-    </style>
 </head>
 <body>
 
     <div class="card">
-        <h1 th:text="${title}">I HAVE DEPLOY MY FIRST APP WITH JENKIN</h1>
-        <div class="badge">Pipeline CI/CD OK ✓</div>
+        <h1 th:text="${title}">I HAVE DEPLOY MYAPP WITH JENKIN</h1>
+        <div class="badge">Pipeline CI/CD OK</div>
     </div>
 
 </body>
