@@ -1,0 +1,29 @@
+@Library('devops-lib') _
+
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Build') {
+            steps {
+                buildApp()
+            }
+        }
+
+        stage('Tests') {
+            steps {
+                runTests()
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveApp()
+            }
+        }
+
+    }
+
+}
