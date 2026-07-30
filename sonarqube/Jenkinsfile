@@ -1,0 +1,16 @@
+stage('SonarQube Analysis') {
+
+    steps {
+
+        withSonarQubeEnv('SonarQube') {
+
+            sh """
+                ./mvnw clean verify sonar:sonar \
+                -Dsonar.token=${SONAR_AUTH_TOKEN}
+            """
+
+        }
+
+    }
+
+}
