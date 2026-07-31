@@ -35,12 +35,12 @@ pipeline {
                  withCredentials([
                     string(
                         credentialsId: 'sonarqube-token',
-                        variable: 'SONARQUBE-TOKEN'
+                        variable: 'SONARQUBE_TOKEN'
                     )
                 ]) {
 
                     sh """
-                        echo ${SONARQUBE-TOKEN}
+                        echo ${SONARQUBE_TOKEN}
                     """
 
 
