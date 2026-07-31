@@ -29,7 +29,6 @@ pipeline {
 
             steps {
                 dir('sonarqube'){
-                    echo "${sonarqube-token}"
                     echo "${SONAR_URL}"
                  
                     sh """
