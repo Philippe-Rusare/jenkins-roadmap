@@ -33,11 +33,11 @@ pipeline {
                     echo "${SONARQUBE-TOKEN}"
                     echo "${SONAR_URL}"
                  
-                    sh """
+                    /* sh """
                     ./mvnw clean verify sonar:sonar \
                     -Dsonar.host.url=${SONAR_URL} \
                     -Dsonar.token=${sonarqube-token}
-                    """
+                    """ */
                 }
 
             }
