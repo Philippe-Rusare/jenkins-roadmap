@@ -36,11 +36,11 @@ pipeline {
                         variable: 'SONARQUBE_TOKEN'
                     )
                     ]) {
-                        sh """
+                                                sh '''
                         ./mvnw clean verify sonar:sonar \
-                        -Dsonar.host.url=${env.SONAR_URL} \
-                        -Dsonar.token=${SONARQUBE_TOKEN}
-                        """
+                        -Dsonar.host.url=$SONAR_URL \
+                        -Dsonar.token=$SONARQUBE_TOKEN
+                        '''
                     }
                     }
 
