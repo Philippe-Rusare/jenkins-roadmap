@@ -1,13 +1,73 @@
-stage('SonarQube Analysis') {
+pipeline {
 
-    steps {
+    agent any
 
-        withSonarQubeEnv('SonarQube') {
+    environment {
 
-            sh """
-                ./mvnw clean verify sonar:sonar \
-                -Dsonar.token=${SONAR_AUTH_TOKEN}
-            """
+        IMAGE_NAME = "hello-jenkins-app-docker-integration"
+
+        IMAGE_TAG = "${BUILD_NUMBER}"
+
+    }
+
+    stages {
+
+        stage('Build Application') {
+
+            steps {
+                dir('sonarqube'){
+
+                sh "./mvnw clean package"
+
+                }
+            }
+
+        }
+
+        stage('SonarQube Analysis') {
+
+            steps {
+
+                withSonarQubeEnv('SonarQube') {
+                    dir('sonarqube'){
+                        
+                        sh """
+                            ./mvnw clean verify sonar:sonar \
+                            -Dsonar.token=${SONAR_AUTH_TOKEN}
+                        """
+                    }
+
+                }
+
+            }
+
+}
+        
+
+        stage('Build Docker Image') {
+
+            steps {
+
+                dir('sonarqube'){
+
+                sh """
+                    docker build \
+                    -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                    .
+                """
+
+            }
+            }
+
+        }
+
+        stage('List Docker Images') {
+
+            steps {
+
+                sh "docker images"
+
+            }
 
         }
 
