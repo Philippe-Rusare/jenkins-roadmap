@@ -29,7 +29,9 @@ pipeline {
 
             steps {
                 dir('sonarqube'){
-                    echo "${SONAR_URL}"
+                     sh """
+                        echo ${SONAR_URL}
+                    """
                  withCredentials([
                     string(
                         credentialsId: 'sonarqube-token',
@@ -37,7 +39,9 @@ pipeline {
                     )
                 ]) {
 
-                    echo "${SONARQUBE-TOKEN}"
+                    sh """
+                        echo ${SONARQUBE-TOKEN}
+                    """
 
 
                  /*    sh """
