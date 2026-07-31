@@ -7,6 +7,7 @@ pipeline {
         IMAGE_NAME = "hello-jenkins-app-docker-integration"
 
         IMAGE_TAG = "${BUILD_NUMBER}"
+        SONAR_URL = "http://72.60.129.189:9000"
 
     }
 
@@ -27,16 +28,16 @@ pipeline {
         stage('SonarQube Analysis') {
 
             steps {
-
                 dir('sonarqube'){
-                    withSonarQubeEnv('SonarQube') {
-                        
-                        sh """
-                            ./mvnw clean verify sonar:sonar \
-                            -Dsonar.token=${SONAR_AUTH_TOKEN}
-                        """
-                    }
-
+                    echo "${sonarqube-token}"
+                    echo "${SONARQUBE-TOKEN}"
+                    echo "${SONAR_URL}"
+                 
+                    sh """
+                    ./mvnw clean verify sonar:sonar \
+                    -Dsonar.host.url=${SONAR_URL} \
+                    -Dsonar.token=${sonarqube-token}
+                    """
                 }
 
             }
