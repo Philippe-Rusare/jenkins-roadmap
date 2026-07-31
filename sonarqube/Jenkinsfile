@@ -29,9 +29,8 @@ pipeline {
 
             steps {
                 dir('sonarqube'){
-                    echo "${sonarqube-token}"
-                    echo "${SONARQUBE-TOKEN}"
-                    echo "${SONAR_URL}"
+                    echo '${sonarqube-token}'
+                    echo '${SONAR_URL}'
                  
                     /* sh """
                     ./mvnw clean verify sonar:sonar \
