@@ -28,8 +28,8 @@ pipeline {
 
             steps {
 
-                withSonarQubeEnv('SonarQube') {
-                    dir('sonarqube'){
+                dir('sonarqube'){
+                    withSonarQubeEnv('SonarQube') {
                         
                         sh """
                             ./mvnw clean verify sonar:sonar \
