@@ -30,7 +30,7 @@ pipeline {
             steps {
                 dir('sonarqube'){
                      sh """
-                        echo ${SONAR_URL}
+                        echo ${env.SONAR_URL}
                     """
                  withCredentials([
                     string(
