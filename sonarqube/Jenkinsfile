@@ -30,12 +30,22 @@ pipeline {
             steps {
                 dir('sonarqube'){
                     echo "${SONAR_URL}"
-                 
-                    sh """
+                 withCredentials([
+                    string(
+                        credentialsId: 'sonarqube-token',
+                        variable: 'SONARQUBE-TOKEN'
+                    )
+                ]) {
+
+                    echo "${SONARQUBE-TOKEN}"
+
+
+                 /*    sh """
                     ./mvnw clean verify sonar:sonar \
                     -Dsonar.host.url=${SONAR_URL} \
                     -Dsonar.token=${sonarqube-token}
-                    """
+                    """ */
+                }
                 }
 
             }
