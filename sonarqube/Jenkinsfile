@@ -29,28 +29,20 @@ pipeline {
 
             steps {
                 dir('sonarqube'){
-                     sh """
-                        echo ${env.SONAR_URL}
-                    """
+                
                  withCredentials([
                     string(
                         credentialsId: 'sonarqube-token',
                         variable: 'SONARQUBE_TOKEN'
                     )
-                ]) {
-
-                    sh """
-                        echo ${SONARQUBE_TOKEN}
-                    """
-
-
-                 /*    sh """
-                    ./mvnw clean verify sonar:sonar \
-                    -Dsonar.host.url=${SONAR_URL} \
-                    -Dsonar.token=${sonarqube-token}
-                    """ */
-                }
-                }
+                    ]) {
+                        sh """
+                        ./mvnw clean verify sonar:sonar \
+                        -Dsonar.host.url=${env.SONAR_URL} \
+                        -Dsonar.token=${SONARQUBE_TOKEN}
+                        """
+                    }
+                    }
 
             }
 
