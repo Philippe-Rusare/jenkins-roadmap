@@ -13,7 +13,7 @@ pipeline {
 
         SONAR_REPORT = "${SONAR_URL}/dashboard?id=${SONAR_PROJECT}"
 
-        FAILED_STAGE = "Unknown"
+        FAILED_STAGE = "Unkno"
 
     }
 
@@ -107,7 +107,6 @@ pipeline {
                         -Dsonar.token=$SONARQUBE_TOKEN \
                         -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                         '''
-
                     }
 
                 }
