@@ -3,15 +3,17 @@ pipeline {
     agent any
 
     environment {
-    
+
         IMAGE_NAME = "hello-jenkins-app-sonarqube-integration"
         IMAGE_TAG  = "${BUILD_NUMBER}"
 
         SONAR_URL = "http://72.60.129.189:9000"
-        
+
+        SONAR_PROJECT = "com.philipperusare:hello-jenkins-app"
+
+        SONAR_REPORT = "${SONAR_URL}/dashboard?id=${SONAR_PROJECT}"
+
         FAILED_STAGE = "Unknown"
-
-
 
     }
 
@@ -186,7 +188,9 @@ pipeline {
 🐳 Docker Image: ${IMAGE_NAME}:${IMAGE_TAG}
 
 📊 SonarQube
-Analysis Completed
+✅ Analysis Completed
+🔗 Report: ${SONAR_REPORT}
+
 
 ⏱ Duration: ${DURATION}
 🔗 Jenkins: ${BUILD_URL}
