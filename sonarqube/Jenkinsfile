@@ -43,10 +43,11 @@ pipeline {
                     ]) {
 
                         sh '''
-                        ./mvnw verify \
+                        ./mvnw clean verify \
                         org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar \
-                        -Dsonar.host.url=http://72.60.129.189:9000 \
-                        -Dsonar.token=$SONARQUBE_TOKEN
+                        -Dsonar.host.url=$SONAR_URL \
+                        -Dsonar.token=$SONARQUBE_TOKEN \
+                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                         '''
 
                     }
