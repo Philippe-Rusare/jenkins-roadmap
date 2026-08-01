@@ -8,64 +8,13 @@ pipeline {
         IMAGE_TAG  = "${BUILD_NUMBER}"
 
         SONAR_URL = "http://72.60.129.189:9000"
-
-        FAILED_STAGE = "Unknown"
-
     }
 
     stages {
 
-        stage('Checkout') {
-
-            steps {
-
-                checkout scm
-
-            }
-
-        }
-
-        stage('Collect Git Information') {
-
-            steps {
-
-                script {
-
-                    env.GIT_AUTHOR = sh(
-                            script: "git log -1 --pretty=format:'%an'",
-                            returnStdout: true
-                    ).trim()
-
-                    env.GIT_MESSAGE = sh(
-                            script: "git log -1 --pretty=format:'%s'",
-                            returnStdout: true
-                    ).trim()
-
-                    env.GIT_BRANCH = sh(
-                            script: "git rev-parse --abbrev-ref HEAD",
-                            returnStdout: true
-                    ).trim()
-
-                    env.GIT_COMMIT = sh(
-                            script: "git rev-parse --short HEAD",
-                            returnStdout: true
-                    ).trim()
-
-                }
-
-            }
-
-        }
-
         stage('Build Application') {
 
             steps {
-
-                script {
-
-                    env.FAILED_STAGE = "Build Application"
-
-                }
 
                 dir('sonarqube') {
 
@@ -81,28 +30,20 @@ pipeline {
 
             steps {
 
-                script {
-
-                    env.FAILED_STAGE = "SonarQube Analysis"
-
-                }
-
                 dir('sonarqube') {
 
                     withCredentials([
-                            string(
-                                    credentialsId: 'sonarqube-token',
-                                    variable: 'SONARQUBE_TOKEN'
-                            )
+                        string(
+                            credentialsId: 'sonarqube-token',
+                            variable: 'SONARQUBE_TOKEN'
+                        )
                     ]) {
 
                         sh '''
-
                         ./mvnw clean verify \
                         org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar \
                         -Dsonar.host.url=$SONAR_URL \
                         -Dsonar.token=$SONARQUBE_TOKEN
-
                         '''
 
                     }
@@ -117,19 +58,12 @@ pipeline {
 
             steps {
 
-                script {
-
-                    env.FAILED_STAGE = "Build Docker Image"
-
-                }
-
                 dir('sonarqube') {
 
                     sh """
-
                     docker build \
-                    -t ${IMAGE_NAME}:${IMAGE_TAG} .
-
+                    -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                    .
                     """
 
                 }
@@ -154,60 +88,24 @@ pipeline {
 
         success {
 
-            script {
-
-                env.DURATION = currentBuild.durationString.replace(" and counting","")
-
-            }
-
             withCredentials([
-                    string(credentialsId: 'telegram-bot-token', variable: 'BOT_TOKEN'),
-                    string(credentialsId: 'telegram-chat-id', variable: 'CHAT_ID')
+                string(credentialsId: 'telegram-bot-token', variable: 'BOT_TOKEN'),
+                string(credentialsId: 'telegram-chat-id', variable: 'CHAT_ID')
             ]) {
 
                 sh """
-
-                curl -s -X POST https://api.telegram.org/bot\$BOT_TOKEN/sendMessage \
+                curl -s -X POST https://api.telegram.org/\$BOT_TOKEN/sendMessage \
                 -d chat_id=\$CHAT_ID \
-                --data-urlencode "text=
-🚀 Jenkins CI/CD DevOps
+                --data-urlencode "text=🚀 Jenkins Pipeline SUCCESS
 
-══════════════════════
+✅ Projet : ${JOB_NAME}
+🔢 Build : #${BUILD_NUMBER}
+🐳 Docker : ${IMAGE_NAME}:${IMAGE_TAG}
 
-✅ BUILD SUCCESS
+📊 SonarQube : Analyse terminée
 
-📦 Project
-${JOB_NAME}
-
-🔢 Build
-#${BUILD_NUMBER}
-
-🌿 Branch
-${GIT_BRANCH}
-
-👤 Author
-${GIT_AUTHOR}
-
-📝 Commit
-${GIT_MESSAGE}
-
-🔖 SHA
-${GIT_COMMIT}
-
-🐳 Docker Image
-${IMAGE_NAME}:${IMAGE_TAG}
-
-📊 SonarQube
-Analysis Completed
-
-⏱ Duration
-${DURATION}
-
-🔗 Jenkins
-${BUILD_URL}
-
-══════════════════════"
-
+🌐 Jenkins :
+${BUILD_URL}"
                 """
 
             }
@@ -216,66 +114,32 @@ ${BUILD_URL}
 
         failure {
 
-            script {
-
-                env.DURATION = currentBuild.durationString.replace(" and counting","")
-
-            }
-
             withCredentials([
-                    string(credentialsId: 'telegram-bot-token', variable: 'BOT_TOKEN'),
-                    string(credentialsId: 'telegram-chat-id', variable: 'CHAT_ID')
+                string(credentialsId: 'telegram-bot-token', variable: 'BOT_TOKEN'),
+                string(credentialsId: 'telegram-chat-id', variable: 'CHAT_ID')
             ]) {
 
                 sh """
-
-                curl -s -X POST https://api.telegram.org/bot\$BOT_TOKEN/sendMessage \
+                curl -s -X POST https://api.telegram.org/\$BOT_TOKEN/sendMessage \
                 -d chat_id=\$CHAT_ID \
-                --data-urlencode "text=
-❌ Jenkins CI/CD DevOps
+                --data-urlencode "text=❌ Jenkins Pipeline FAILED
 
-══════════════════════
+🚨 Projet : ${JOB_NAME}
 
-🚨 BUILD FAILED
+🔢 Build : #${BUILD_NUMBER}
 
-📦 Project
-${JOB_NAME}
+📌 Consulte les logs :
 
-🔢 Build
-#${BUILD_NUMBER}
-
-❗Failed Stage
-${FAILED_STAGE}
-
-🌿 Branch
-${GIT_BRANCH}
-
-👤 Author
-${GIT_AUTHOR}
-
-📝 Commit
-${GIT_MESSAGE}
-
-🔖 SHA
-${GIT_COMMIT}
-
-⏱ Duration
-${DURATION}
-
-🔗 Logs
-${BUILD_URL}
-
-══════════════════════"
-
+${BUILD_URL}"
                 """
 
             }
-
+ 
         }
 
         always {
 
-            cleanWs()
+            echo "Pipeline terminé."
 
         }
 
