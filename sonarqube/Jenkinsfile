@@ -13,7 +13,7 @@ pipeline {
 
         SONAR_REPORT = "${SONAR_URL}/dashboard?id=${SONAR_PROJECT}"
 
-        FAILED_STAGE = "Unkno"
+        FAILED_STAGE = "Unknown"
 
     }
 
@@ -204,7 +204,7 @@ pipeline {
 
             script {
 
-                env.DURATION = currentBuild.durationString.replace(" and counting","")
+                env.DURATION = currentBuild.durationString.replace(" and counting ","")
 
             }
 
