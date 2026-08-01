@@ -41,10 +41,10 @@ pipeline {
 
                         sh '''
                         ./mvnw clean verify \
-                            org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar \
-                            -Dsonar.host.url=$SONAR_URL \
-                            -Dsonar.token=$SONARQUBE_TOKEN \
-                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                        org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar \
+                        -Dsonar.host.url=$SONAR_URL \
+                        -Dsonar.token=$SONARQUBE_TOKEN \
+                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                         '''
 
                     }
